@@ -2,10 +2,10 @@
 ### Setup Raspberry Pi with Raspbian Jessie Lite (headless mode)
 #### Step 1: Run raspbianizer.sh
 - Specify the correct device path to the fresh SD card (e.g. /dev/sdd, /dev/sde, or /dev/sdx)
-- Check that the SD card does not have partitions
+- Specify the BRANCH variable with correct github branch or release version tag (master, v1.0.0, etc)
 - Example:
 ```sh
-export BRANCH=v1.0.0 && curl -skL "https://raw.githubusercontent.com/do-i/bubble3/${BRANCH}/bin/raspbianizer.sh" | sudo bash -s /dev/sdx
+export BRANCH=pretty-ui && curl -skL "https://raw.githubusercontent.com/do-i/bubble3/${BRANCH}/bin/raspbianizer.sh" | sudo bash -s /dev/sdx
 ```
 
 #### Step 2: Boot-up Raspberry Pi3 using SD card & SSH
@@ -15,15 +15,17 @@ export BRANCH=v1.0.0 && curl -skL "https://raw.githubusercontent.com/do-i/bubble
 - Run Keygen
 ```sh
 ssh-keygen
-[Nice Article](https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/)
 ```
+[Help](https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/)
 
-#### Step 3: Transfer rsa public key
+
+#### Step 3: Transfer rsa public key from your OS to Raspberry Pi3
 ```sh
 cat ~/.ssh/id_rsa.pub | ssh pi@<IP Address> "mkdir -p ~/.ssh && cat >>  ~/.ssh/authorized_keys"
 ```
 
-#### Step 4:  Install and Configure
+#### Step 4: Install and Configure
+Recommend you to use same BRANCH as in Step 1.
 ```sh
 export BRANCH=pretty-ui && curl -skL "https://raw.githubusercontent.com/do-i/bansible/${BRANCH}/install.sh" | sudo bash
 ```
