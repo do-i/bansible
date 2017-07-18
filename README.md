@@ -1,4 +1,4 @@
-# Bubble 3
+# Bansible ~ Bubble3 Configured By Ansible
 ### Setup Raspberry Pi with Raspbian Jessie Lite (headless mode)
 #### Step 1: Run raspbianizer.sh
 - Specify the correct device path to the fresh SD card (e.g. /dev/sdd, /dev/sde, or /dev/sdx)
