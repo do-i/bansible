@@ -1,0 +1,13 @@
+- name: Install packages for apache2
+  apt:
+    name: apache2
+    state: installed
+
+- name: checking the dir exists
+  stat:
+    path: /var/www/html
+  register: html_dir
+
+- name: Skip if /var/www/html dir exists
+  fail: msg="[Error] apache2 failed to install"
+  when: not html_dir.stat.isdir

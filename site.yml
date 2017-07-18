@@ -1,0 +1,12 @@
+---
+# raspberry pi3 play file
+- hosts: all
+  become: true
+  become_method: sudo
+  remote_user: pi
+  roles:
+    - common
+    - network
+    - webapp
+  vars:
+    panda: hungry

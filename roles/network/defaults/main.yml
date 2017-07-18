@@ -1,0 +1,9 @@
+---
+# for dnsmasq
+bubble_ip: 2.4.8.16
+dhcp_from_ip: 2.4.8.32
+dhcp_upto_ip: 2.4.8.64
+
+# for hostapd
+ssid: SimpleBubble
+wpa_pass: raspberry

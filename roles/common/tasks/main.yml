@@ -1,0 +1,3 @@
+- include: bashrc.yml
+- include: jq.yml
+- include: tree.yml

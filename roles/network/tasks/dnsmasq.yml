@@ -1,0 +1,12 @@
+- name: install package dnsmasq
+  apt:
+    name: dnsmasq
+    state: installed
+
+- name: configure dnsmasq
+  template:
+    src: dnsmasq.conf
+    dest: /etc/dnsmasq.conf
+    owner: root
+    group: root
+    mode: 0644

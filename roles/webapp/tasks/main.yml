@@ -1,0 +1,4 @@
+- include: imagemagick.yml
+- include: apache2.yml
+- include: bubble.yml
+  tags: [bubble]

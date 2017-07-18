@@ -1,0 +1,13 @@
+- name: Install packages for imagemagick
+  apt:
+    name: imagemagick
+    state: installed
+
+- name: checking the convert command exists
+  stat:
+    path: /usr/bin/convert
+  register: convert_lnk
+
+- name: Skip if convert command exists
+  fail: msg="[Error] imagemagick failed to install"
+  when: not convert_lnk.stat.islnk

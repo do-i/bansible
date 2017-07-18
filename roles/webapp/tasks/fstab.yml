@@ -1,0 +1,22 @@
+- name: Update fstab
+  copy:
+    src: fstab
+    dest: /etc/fstab
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Mount the usb device so that web page can acess to files on the usb thumb
+  mount:
+    src: /dev/sda1
+    path: /mnt
+    fstype: vfat
+    state: mounted
+
+- name: Create hard link from /var/www/html/ext-content to /mnt
+  mount:
+    src: /mnt
+    path: /var/www/html/ext-content
+    fstype: none
+    opts: bind
+    state: mounted

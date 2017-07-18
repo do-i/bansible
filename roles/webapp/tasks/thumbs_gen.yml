@@ -1,0 +1,15 @@
+- name: copy thumbs-gen.bash to ~/thumbs-gen.bash
+  copy:
+    src: thumbs-gen.bash
+    dest: "/home/{{main_user}}"
+    owner: "{{main_user}}"
+    group: "{{main_user}}"
+    mode: 0755
+
+- name: create systemd service file for thumbnail generation
+  copy:
+    src: thumbs-gen.service
+    dest: /lib/systemd/system
+    owner: root
+    group: root
+    mode: 0755

@@ -1,0 +1,169 @@
+- name: change the owner of html dir to pi
+  file:
+    path: /var/www/html/
+    state: directory
+    owner: "{{main_user}}"
+    group: "{{main_user}}"
+    mode: 0755
+
+- name: Create ext-content dir
+  file:
+    path: /var/www/html/ext-content
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- include: fstab.yml
+
+- name: List directories under /var/www/html except ext-content
+  find:
+    paths: /var/www/html
+    file_type: any
+    use_regex: True
+    patterns: "(?!ext-content)"
+  register: result_artifacts
+
+- name: Delete all files and directories under /var/www/html except ext-content
+  file:
+    path: "{{item.path}}"
+    state: absent
+  with_items: "{{result_artifacts.files}}"
+
+- name: Download the latest bubble3 on the specified branch in tar.gz
+  get_url:
+    url: "https://github.com/do-i/bubble3/archive/{{BRANCH}}.tar.gz"
+    dest: "/tmp/{{BRANCH}}.tar.gz"
+    owner: "{{main_user}}"
+    group: "{{main_user}}"
+    mode: 0400
+    force: yes
+
+- name: Unpack the contents into bubble3-{{BRANCH}}
+  unarchive:
+    src: "/tmp/{{BRANCH}}.tar.gz"
+    dest: "/home/{{main_user}}"
+    remote_src: yes
+    owner: "{{main_user}}"
+    group: "{{main_user}}"
+    mode: 0755
+
+- name: Crest BUBBLE_HOME variable
+  tags: always
+  set_fact:
+    BUBBLE_HOME: "{{ BRANCH }}"
+
+# Note: for release tag (e.g., v1.0.0-rc8) github removed prefix v
+- name: Override {{BUBBLE_HOME}} if {{BRANCH}} is release tag (prefixed with v)
+  tags: always
+  set_fact:
+    BUBBLE_HOME: "{{BRANCH | regex_replace('^v','') }}"
+  when: BRANCH | match("^v[0-9].[0-9].[0-9]")
+
+- name: print  BUBBLE_HOME
+  tags: always
+  debug:
+    var: BUBBLE_HOME
+
+- name: Create ~/tmp
+  tags: always
+  file:
+    path: "/home/{{main_user}}/tmp"
+    state: directory
+    owner: "{{main_user}}"
+    group: "{{main_user}}"
+    mode: 0755
+
+- name: Build Bubble app
+  archive:
+    path: "/home/{{main_user}}/bubble3-{{BUBBLE_HOME}}/web/*"
+    dest: "/home/{{main_user}}/tmp/{{date_now}}.zip"
+    format: zip
+    owner: "{{main_user}}"
+    group: "{{main_user}}"
+    mode: 0644
+  register: bubble_build
+
+- name: print bubble_build
+  debug:
+    var: bubble_build.dest
+
+- name: Deploy the bubble_build to /var/www/html
+  become: yes
+  become_user: "{{main_user}}"
+  unarchive:
+    src: "{{bubble_build.dest}}"
+    dest: "/var/www/html"
+    remote_src: yes
+    owner: "{{main_user}}"
+    group: "{{main_user}}"
+    mode: 0755
+
+- include: thumbs_gen.yml
+
+- include: usb_motion.yml
+
+# Deprecated
+- name: copy file_lister.py to ~/file_lister.py
+  copy:
+    src: file_lister.py
+    dest: "/home/{{main_user}}"
+    owner: "{{main_user}}"
+    group: "{{main_user}}"
+    mode: 0755
+
+# Deprecated
+- name: create systemd service file (aka Unit File) for file_lister.py
+  copy:
+    src: media-discovery.service
+    dest: /lib/systemd/system
+    owner: root
+    group: root
+    mode: 0644
+
+# Deprecated
+- name: copy file_lister.py to ~/file_lister_v2.py
+  copy:
+    src: file_lister_v2.py
+    dest: "/home/{{main_user}}"
+    owner: "{{main_user}}"
+    group: "{{main_user}}"
+    mode: 0755
+
+# Deprecated
+- name: create systemd service file (aka Unit File) for file_lister_v2.py
+  copy:
+    src: media-discovery2.service
+    dest: /lib/systemd/system
+    owner: root
+    group: root
+    mode: 0644
+
+- name: copy file_lister.py to ~/tree_helper.sh
+  copy:
+    src: tree_helper.sh
+    dest: "/home/{{main_user}}"
+    owner: "{{main_user}}"
+    group: "{{main_user}}"
+    mode: 0755
+
+- name: create systemd service file (aka Unit File) for tree_helper.sh
+  tags: WIP
+  copy:
+    src: media-discovery3.service
+    dest: /lib/systemd/system
+    owner: root
+    group: root
+    mode: 0644
+
+- name: enable the systemd services
+  tags: WIP
+  service:
+    name: "{{item}}"
+    enabled: yes
+    state: started
+  with_items:
+    - media-discovery.service
+    - media-discovery2.service
+    - media-discovery3.service
+    - thumbs-gen.service

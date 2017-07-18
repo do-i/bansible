@@ -1,0 +1,30 @@
+- name: Install package for hostapd
+  apt:
+    name: hostapd
+    state: installed
+
+- name: create hostapd configuration
+  copy:
+    src: hostapd
+    dest: /etc/default/hostapd
+    owner: root
+    group: root
+    mode: 0644
+
+- name: validate value for ssid
+  fail: msg="ssid must be ^[a-zA-Z0-9]{1,32}$"
+  when: ssid | match("!(^[a-zA-Z0-9]{1,32}$)")
+
+- name: validate value for wpa_pass
+  fail: msg="wpa_pass must be ^[a-zA-Z0-9]{8,63}$"
+  when: wpa_pass | match("!(^[a-zA-Z0-9]{8,63}$)")
+
+# /etc/hostapd dir is created by the installer
+
+- name: create hostapd.conf configuration
+  template:
+    src: hostapd.conf
+    dest: /etc/hostapd/hostapd.conf
+    owner: root
+    group: root
+    mode: 0644

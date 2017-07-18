@@ -1,0 +1,32 @@
+
+- name: Create .bashrc.d
+  file:
+    path: "/home/{{main_user}}/.bashrc.d"
+    state: directory
+    mode: 0700
+    owner:  "{{main_user}}"
+    group:  "{{main_user}}"
+
+- name: Create .bashrc
+  copy:
+    src: dot.bashrc
+    dest: "/home/{{main_user}}/.bashrc"
+    owner: "{{main_user}}"
+    group: "{{main_user}}"
+    mode: 0700
+
+- name: Create prompt.bashrc
+  copy:
+    src: prompt.bashrc
+    dest: "/home/{{main_user}}/.bashrc.d/"
+    owner: "{{main_user}}"
+    group: "{{main_user}}"
+    mode: 0700
+
+- name: Create aliases.bashrc
+  copy:
+    src: dot.bash_aliases
+    dest: "/home/{{main_user}}/.bashrc.d/"
+    owner: "{{main_user}}"
+    group: "{{main_user}}"
+    mode: 0700
