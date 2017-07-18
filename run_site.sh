@@ -1,20 +1,26 @@
 #!/bin/bash
 #
 # This script wrapers ansible-playbook command. It validates variables and pass correct arguments.
-# Usage: VENV=<path/to/virtualenv/for/ansible> && BRANCH=<github_branch> && bash ./run_site.sh
-# Example: VENV=~/apps/envs/ansible && BRANCH=pretty-ui && bash ./run_site.sh
+# Usage: export BRANCH=<github_branch> && ./run_site.sh
+# Example: BRANCH=pretty-ui && bash ./run_site.sh
 #
-if [ "${VENV}" == "" ]; then
-  echo "Specify VENV variable"
+if [ "${BRANCH}" == "" ]; then
+  echo "[NG] Specify BRANCH variable"
   exit 1
 fi
-if [ "$BRANCH" == "" ]; then
-  echo "Specify BRANCH variable"
-  exit 1
+EXTRA_VARS="BRANCH=${BRANCH}"
+
+if [ "${SSID}" != "" ]; then
+  EXTRA_VARS="${EXTRA_VARS} ssid=${SSID}"
 fi
-source ${VENV}/bin/activate
+
+if [ "${PASS}" != "" ]; then
+  EXTRA_VARS="${EXTRA_VARS} ssid=${PASS}"
+fi
+
+# TODO add ip address option for dnsmasq; dynamically generate dhcp address range based on the ip
 if [ "$1" == "" ]; then
-  ansible-playbook -i hosts -s --ask-sudo-pass site.yml --extra-vars "BRANCH=${BRANCH}"
+  ansible-playbook -i hosts -s --ask-sudo-pass site.yml --extra-vars "${EXTRA_VARS}"
 else
-  ansible-playbook -i hosts -s --ask-sudo-pass site.yml --extra-vars "BRANCH=${BRANCH}" --tags "$1"
+  ansible-playbook -i hosts -s --ask-sudo-pass site.yml --extra-vars "${EXTRA_VARS}" --tags "$1"
 fi
