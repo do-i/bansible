@@ -4,6 +4,12 @@ bubble_ip: 2.4.8.16
 dhcp_from_ip: 2.4.8.32
 dhcp_upto_ip: 2.4.8.64
 
+# for interfaces
+address: "{{bubble_ip}}"
+netmask: 255.255.255.0
+network: 2.4.8.0
+broadcast: 2.4.8.255
+
 # for hostapd
 ssid: SimpleBubble
 wpa_pass: raspberry

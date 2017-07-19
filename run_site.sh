@@ -4,9 +4,10 @@
 # Usage: export BRANCH=<github_branch> && ./run_site.sh
 # Example: BRANCH=pretty-ui && bash ./run_site.sh
 #
+source ../envs/ansible/bin/activate
+
 if [ "${BRANCH}" == "" ]; then
-  echo "[NG] Specify BRANCH variable"
-  exit 1
+  BRANCH=pretty-ui
 fi
 EXTRA_VARS="BRANCH=${BRANCH}"
 

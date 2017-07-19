@@ -11,6 +11,7 @@
 
 # TODO Move up interface config before dhcpcd.conf
 - name: Static IP Address configuration
+  tags: WIP
   template:
     src: interfaces
     dest: /etc/network/interfaces

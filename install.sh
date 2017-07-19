@@ -53,6 +53,7 @@ echo "[OK] Install virtualenv"
 source ./envs/ansible/bin/activate
 echo "[OK] Source virtualenv"
 pip install ansible
+pip install netaddr
 echo "[OK] Pip install"
 pip freeze
 
