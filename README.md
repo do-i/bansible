@@ -18,17 +18,24 @@ ssh-keygen
 ```
 [Help](https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/)
 
-
-#### Step 3: Transfer rsa public key from your OS to Raspberry Pi3
+#### Step 3: Update hosts file
 ```sh
-cat ~/.ssh/id_rsa.pub | ssh pi@<IP Address> "mkdir -p ~/.ssh && cat >>  ~/.ssh/authorized_keys"
+sudo echo '<IP Address>   pi pi3 bubble' | sudo tee --append /etc/hosts
 ```
 
-#### Step 4: Install and Configure
+#### Step 4: Transfer rsa public key from your OS to Raspberry Pi3
+```sh
+cat ~/.ssh/id_rsa.pub | ssh pi@pi3 "mkdir -p ~/.ssh && cat >>  ~/.ssh/authorized_keys"
+```
+- When it asks you to enter password, enter `raspberry`.
+- Optionally you can run `ssh-add` command. This keeps your ssh key in memory to avoid typing password in the next step.
+
+#### Step 5: Install and Configure
 Recommend you to use same BRANCH as in Step 1.
 ```sh
 export BRANCH=pretty-ui && curl -skL "https://raw.githubusercontent.com/do-i/bansible/${BRANCH}/install.sh" | sudo bash
 ```
+- Tip: This install command should be executed on your OS. (Not on raspberry pi3.)
 - Note: Thanks for a [great instructional article](https://frillip.com/using-your-raspberry-pi-3-as-a-wifi-access-point-with-hostapd) for WiFi configuration.
 - Override Options
   - WIFI SSID (alphanumeric 1-32 characters)
@@ -39,14 +46,15 @@ export BRANCH=pretty-ui && curl -skL "https://raw.githubusercontent.com/do-i/ban
   ```sh
   export PASS=MySecretPassPhrase2016
   ```
+- Note: When you see this `Enter passphrase for key '/home/<username>/.ssh/id_rsa':` enter the passphrase you used to create key in Step 2.
 
-#### Step 5: Check for Errors & Reboot
+#### Step 6: Check for Errors & Reboot
 - Check for any errors. If everything looks good, then run the following command:
 ```sh
 sudo reboot
 ```
 
-#### Step 6: Connect
+#### Step 7: Connect
 - Disconnect ethernet cable from Raspberry Pi3
 - Connect your device(s) to WiFi Access Point (If you did not override SSID and PASS in Step 3, here are default values.)
   - SSID: SimpleBubble
