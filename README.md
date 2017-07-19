@@ -49,10 +49,7 @@ export BRANCH=pretty-ui && curl -skL "https://raw.githubusercontent.com/do-i/ban
 - Note: When you see this `Enter passphrase for key '/home/<username>/.ssh/id_rsa':` enter the passphrase you used to create key in Step 2.
 
 #### Step 6: Check for Errors & Reboot
-- Check for any errors. If everything looks good, then run the following command:
-```sh
-sudo reboot
-```
+- Check for any errors. If everything looks good, move on to the final step.
 
 #### Step 7: Connect
 - Disconnect ethernet cable from Raspberry Pi3
