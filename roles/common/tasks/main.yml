@@ -1,10 +1,5 @@
-- name: Update and upgrade apt packages
-  become: true
-  apt:
-    update_cache: yes
-    upgrade: yes
-
+- include: upgrade.yml
+  tags: update_upgrade_reboot
 - include: bashrc.yml
 - include: jq.yml
 - include: tree.yml
-

@@ -148,7 +148,6 @@
     mode: 0755
 
 - name: create systemd service file (aka Unit File) for tree_helper.sh
-  tags: WIP
   copy:
     src: media-discovery3.service
     dest: /lib/systemd/system
@@ -157,7 +156,6 @@
     mode: 0644
 
 - name: enable the systemd services
-  tags: WIP
   service:
     name: "{{item}}"
     enabled: yes
