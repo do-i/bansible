@@ -1,5 +1,4 @@
 #!/bin/bash
-#
 # Copyright (c) 2017 Joji Doi
 #
 # Script to download Ansible and setup environment

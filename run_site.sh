@@ -1,4 +1,5 @@
 #!/bin/bash
+# Copyright (c) 2017 Joji Doi
 #
 # This script wrapers ansible-playbook command. It validates variables and pass correct arguments.
 # Usage: export BRANCH=<github_branch> && ./run_site.sh
