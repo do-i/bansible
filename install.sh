@@ -40,15 +40,16 @@ else
   exit 1
 fi
 
-sudo apt install build-essential python-dev
+sudo apt install -y build-essential python-dev
 echo "[OK] Install build-essential python-dev"
-if [ -d ./envs ]; then
-  rm -r ./envs
-  echo "[OK] Removed previously installed virtualenv"
+if [ -d ./envs/ansible ]; then
+  echo "[SKIP] Virtualenv is already installed."
+else
+  mkdir ./envs
+  virtualenv ./envs/ansible
+  echo "[OK] Install virtualenv"
 fi
-mkdir ./envs
-virtualenv ./envs/ansible
-echo "[OK] Install virtualenv"
+
 source ./envs/ansible/bin/activate
 echo "[OK] Source virtualenv"
 pip install ansible
