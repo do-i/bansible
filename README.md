@@ -5,7 +5,7 @@
 - Specify the BRANCH variable with correct github branch or release version tag (master, v1.0.0, etc)
 - Example:
 ```sh
-export BRANCH=pretty-ui && curl -skL "https://raw.githubusercontent.com/do-i/bansible/${BRANCH}/scripts/raspbianizer.sh" | sudo bash -s /dev/sdx
+export BRANCH=ui-v2 && curl -skL "https://raw.githubusercontent.com/do-i/bansible/${BRANCH}/scripts/raspbianizer.sh" | sudo bash -s /dev/sdx
 ```
 
 #### Step 2: Boot-up Raspberry Pi3 using SD card & SSH
