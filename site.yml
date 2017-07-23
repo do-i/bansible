@@ -8,8 +8,5 @@
     - { role: common, tags: ['common'] }
     - { role: network, tags: ['network'] }
     - { role: webapp, tags: ['webapp'] }
-    - common
-    - network
-    - webapp
   vars:
     panda: hungry
