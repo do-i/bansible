@@ -40,8 +40,8 @@ else
   exit 1
 fi
 
-sudo apt install -y build-essential python-dev
-echo "[OK] Install build-essential python-dev"
+sudo apt install -y build-essential python-dev virtualenv
+echo "[OK] Install build-essential python-dev virtualenv"
 if [ -d ./envs/ansible ]; then
   echo "[SKIP] Virtualenv is already installed."
 else
