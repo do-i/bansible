@@ -21,7 +21,7 @@ if [ "${PASS}" != "" ]; then
 fi
 
 # TODO add ip address option for dnsmasq; dynamically generate dhcp address range based on the ip
-echo "raspberry"
+echo "==> raspberry <=="
 if [ "$1" == "" ]; then
   ansible-playbook -i hosts -s --ask-sudo-pass site.yml --extra-vars "${EXTRA_VARS}"
 else
