@@ -3,12 +3,12 @@
 #
 # This script wrapers ansible-playbook command. It validates variables and pass correct arguments.
 # Usage: export BRANCH=<github_branch> && ./run_site.sh
-# Example: BRANCH=pretty-ui && bash ./run_site.sh
+# Example: BRANCH=ui-v2 && ./run_site.sh bubble
 #
 source ../envs/ansible/bin/activate
 
 if [ "${BRANCH}" == "" ]; then
-  BRANCH=pretty-ui
+  BRANCH=master
 fi
 EXTRA_VARS="BRANCH=${BRANCH}"
 

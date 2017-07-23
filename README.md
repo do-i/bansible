@@ -33,7 +33,7 @@ cat ~/.ssh/id_rsa.pub | ssh pi@pi3 "mkdir -p ~/.ssh && cat >>  ~/.ssh/authorized
 #### Step 5: Install and Configure
 Recommend you to use same BRANCH as in Step 1.
 ```sh
-export BRANCH=pretty-ui && curl -skL "https://raw.githubusercontent.com/do-i/bansible/${BRANCH}/install.sh" | bash
+export BRANCH=ui-v2 && curl -skL "https://raw.githubusercontent.com/do-i/bansible/${BRANCH}/install.sh" | bash
 ```
 - Tip: This install command should be executed on your OS. (Not on raspberry pi3.)
 - Note: Thanks for a [great instructional article](https://frillip.com/using-your-raspberry-pi-3-as-a-wifi-access-point-with-hostapd) for WiFi configuration.
