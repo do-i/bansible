@@ -60,5 +60,5 @@ pip freeze
 # Run Playbook
 cd ${BANSIBLE_DIR}
 echo "Enter password for raspberry pi3... hint: raspberry"
-ansible-playbook -i hosts -s --ask-sudo-pass site.yml --extra-vars "BRANCH=${BRANCH}"
+##ansible-playbook -i "localhost," --connection local -s --ask-sudo-pass site.yml --extra-vars "BRANCH=${BRANCH}"
 echo "[Ok] End of install script. Check for any errors."
