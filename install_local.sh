@@ -42,12 +42,12 @@ fi
 if [ "${UPGRADE}" == "no" ]; then
   echo "skip apt update and upgrade"
 else
-  apt-get update
-  apt-get upgrade
+  apt update -y
+  apt upgrade -y
 fi
-apt-get install -y python-pip python-yaml python-jinja2 python-httplib2 python-paramiko python-pkg-resources
-apt-get install -y build-essential python-all-dev sshpass && pip install pyrax pysphere boto passlib dnspython
-apt-get install -y bzip2 file findutils procps debianutils xz-utils
+apt install -y python-pip python-yaml python-jinja2 python-httplib2 python-paramiko python-pkg-resources
+apt install -y build-essential python-all-dev sshpass && pip install pyrax pysphere boto passlib dnspython
+apt install -y bzip2 file findutils procps debianutils xz-utils
 
 mkdir /etc/ansible/
 echo -e '[local]\nlocalhost\n' > /etc/ansible/hosts
