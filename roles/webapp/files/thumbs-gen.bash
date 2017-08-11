@@ -45,9 +45,9 @@ IFS=$(echo -en "\n\b")
 for fullname in $(find ${THUMBS_DIR} -type f -iname '*.png' -o -iname '*.jpg' -o -iname '*.tif' -o -iname '*.tiff' -o -iname '*.gif'); do
   #
   # Given thumbnail /mnt/.thumbs/mnt/photos/IMG_2147.JPG, target img will be in /mnt/photos/IMG_2147.JPG
-  if [ ! -f ${TOP_DIR}/${fullname##${THUMBS_DIR}/} ]; then
+  if [ ! -f ${fullname##${THUMBS_DIR}} ]; then
     echo "${fullname} thumbnail deleting..." >> ${LOG_FILE}
-    sudo rm "${THUMBS_DIR}/${basename}"
+    sudo rm "${fullname}"
     echo "${fullname} thumbnail deleted." >> ${LOG_FILE}
   fi
 done
@@ -59,7 +59,9 @@ for fullname in $(find ${TOP_DIR}/* -maxdepth 8 -type f -iname '*.png' -o -iname
   # Given /mnt/photos/IMG_2147.JPG as a fullname, thumbnail will be in /mnt/.thumbs/mnt/photos/IMG_2147.JPG
   if [ ! -f ${THUMBS_DIR}/${fullname} ]; then
     echo "${fullname} thumbnail creating..." >> ${LOG_FILE}
-    sudo convert "${IMAGE_DIR}/${basename}" -auto-orient -thumbnail 100x100 "${THUMBS_DIR}/${basename}"
+    targetdir=${THUMBS_DIR}/$(dirname "${fullname}")
+    sudo mkdir -p "${targetdir}"
+    sudo convert "${fullname}" -auto-orient -thumbnail 100x100 "${THUMBS_DIR}/${fullname}"
     echo "${fullname} thumbnail created." >> ${LOG_FILE}
   fi
 done
