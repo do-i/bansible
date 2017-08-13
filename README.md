@@ -5,7 +5,7 @@
 - Specify the BRANCH variable with correct github branch or release version tag (master, v1.0.0, etc)
 - Example:
 ```sh
-export BRANCH=ui-v2 && curl -skL "https://raw.githubusercontent.com/do-i/bansible/${BRANCH}/scripts/raspbianizer.sh" | sudo bash -s /dev/sdx
+export BRANCH=release-branch-2017.08.13 curl -skL "https://raw.githubusercontent.com/do-i/bansible/${BRANCH}/scripts/raspbianizer.sh" | sudo bash -s /dev/sdx
 ```
 
 #### Step 2: Boot-up Raspberry Pi3 using SD card & SSH
@@ -17,7 +17,7 @@ export BRANCH=ui-v2 && curl -skL "https://raw.githubusercontent.com/do-i/bansibl
 #### Step 3: Install and Configure (Run on Bubble)
 Recommend you to use same BRANCH as in Step 1.
 ```sh
-export BRANCH=ui-v2 && curl -skL "https://raw.githubusercontent.com/do-i/bansible/${BRANCH}/install_local.sh" | sudo BRANCH="${BRANCH}" bash
+export BRANCH=release-branch-2017.08.13 && curl -skL "https://raw.githubusercontent.com/do-i/bansible/${BRANCH}/install_local.sh" | sudo BRANCH="${BRANCH}" bash
 ```
 - Note: Thanks for a [great instructional article](https://frillip.com/using-your-raspberry-pi-3-as-a-wifi-access-point-with-hostapd) for WiFi configuration.
 - Override Options
