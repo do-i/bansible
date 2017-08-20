@@ -52,4 +52,5 @@ apt install -y bzip2 file findutils procps debianutils xz-utils
 mkdir /etc/ansible/
 echo -e '[local]\nlocalhost\n' > /etc/ansible/hosts
 pip install ansible
+echo 'Right before running local_run.sh'
 cd ${BANSIBLE_DIR} && ./local_run.sh
