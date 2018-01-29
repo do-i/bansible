@@ -17,7 +17,7 @@ if [ "${SSID}" != "" ]; then
 fi
 
 if [ "${PASS}" != "" ]; then
-  EXTRA_VARS="${EXTRA_VARS} ssid=${PASS}"
+  EXTRA_VARS="${EXTRA_VARS} wpa_pass=${PASS}"
 fi
 
 # TODO add ip address option for dnsmasq; dynamically generate dhcp address range based on the ip
