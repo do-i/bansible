@@ -5,7 +5,7 @@
 # Usage: export BRANCH=<github_branch> && ./run_site.sh
 # Example: BRANCH=ui-v2 && ./run_site.sh bubble
 #
-source ../envs/ansible/bin/activate
+source ~/envs/ansible/bin/activate
 
 if [ "${BRANCH}" == "" ]; then
   BRANCH=master
@@ -23,7 +23,7 @@ fi
 # TODO add ip address option for dnsmasq; dynamically generate dhcp address range based on the ip
 echo "==> raspberry <=="
 if [ "$1" == "" ]; then
-  ansible-playbook -i hosts -s --ask-sudo-pass site.yml --extra-vars "${EXTRA_VARS}"
+  ansible-playbook -i hosts --ask-become-pass --become site.yml --extra-vars "${EXTRA_VARS}"
 else
-  ansible-playbook -i hosts -s --ask-sudo-pass site.yml --extra-vars "${EXTRA_VARS}" --tags "$1"
+  ansible-playbook -i hosts --ask-become-pass --become site.yml --extra-vars "${EXTRA_VARS}" --tags "$1"
 fi
