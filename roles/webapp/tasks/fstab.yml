@@ -11,7 +11,8 @@
     src: /dev/sda1
     path: /mnt
     fstype: vfat
-    state: mounted
+    # This was mounted but during debugging I need keyboard for the signle USB port. So, no USB storage yet.
+    state: present
 
 - name: Create hard link from /var/www/html/ext-content to /mnt
   mount:

@@ -12,12 +12,14 @@
     mode: 0644
 
 - name: validate value for ssid
-  fail: msg="ssid must be ^[a-zA-Z0-9]{1,32}$"
-  when: ssid | match("!(^[a-zA-Z0-9]{1,32}$)")
+  fail:
+    msg: "ssid must be ^[a-zA-Z0-9]{1,32}$"
+  when: ssid is match("!(^[a-zA-Z0-9]{1,32}$)")
 
 - name: validate value for wpa_pass
-  fail: msg="wpa_pass must be ^[a-zA-Z0-9]{8,63}$"
-  when: wpa_pass | match("!(^[a-zA-Z0-9]{8,63}$)")
+  fail:
+    msg: "wpa_pass must be ^[a-zA-Z0-9]{8,63}$"
+  when: wpa_pass is match("!(^[a-zA-Z0-9]{8,63}$)")
 
 # /etc/hostapd dir is created by the installer
 

@@ -18,17 +18,7 @@
     group: root
     mode: 0644
 
-- name: Restart dhcpcd
-  service:
-    name: dhcpcd
-    state: restarted
-
-- name: Reload the configuration for wlan0
-  command: bash -c "ifdown wlan0 && ifup wlan0"
-
-# TODO check if ifconfig | grep -q 2.4.8.16;
-
-- name: Set up IPV4 Forwarding so that device connected to pi via wlan0 can use eth0
+- name: Set up IPV4 Forwarding so that device connected to pi via wlan0 can use wlan1
   copy:
     src: sysctl.conf
     dest: /etc/sysctl.conf
@@ -39,12 +29,13 @@
 - name: Activate IP Forwarding
   command: sh -c "echo 1 > /proc/sys/net/ipv4/ip_forward"
 
-- name: Allow wifi clients to access to internet via eth0
+# TODO Test if this works as expected
+- name: Allow wifi clients to access to internet via wlan1
   command: "{{item}}"
   with_items:
-    - bash -c "iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE"
-    - bash -c "iptables -A FORWARD -i eth0 -o wlan0 -m state --state RELATED,ESTABLISHED -j ACCEPT"
-    - bash -c "iptables -A FORWARD -i wlan0 -o eth0 -j ACCEPT"
+    - bash -c "iptables -t nat -A POSTROUTING -o wlan1 -j MASQUERADE"
+    - bash -c "iptables -A FORWARD -i wlan1 -o wlan0 -m state --state RELATED,ESTABLISHED -j ACCEPT"
+    - bash -c "iptables -A FORWARD -i wlan0 -o wlan1 -j ACCEPT"
 
 - name: Save iptables in file so the config is applied every time we reboot the Pi
   command: sh -c "iptables-save > /etc/iptables.ipv4.nat"
@@ -56,13 +47,3 @@
     owner: root
     group: root
     mode: 0644
-
-- name: Restart hostapd
-  service:
-    name: hostapd
-    state: restarted
-
-- name: Restart dnsmasq
-  service:
-    name: dnsmasq
-    state: restarted

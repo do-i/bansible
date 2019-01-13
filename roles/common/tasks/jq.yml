@@ -1,4 +1,4 @@
 - name: Install package for jq
   apt:
     name: jq
-    state: installed
+    state: present
